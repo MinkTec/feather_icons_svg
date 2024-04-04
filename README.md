@@ -3,6 +3,12 @@
 [Feather Icons](https://feathericons.com/) port to Flutter. This package renders the icons as SVG
 pictures. This makes it possible to customize icon properties in runtime (stroke width etc.).
 
+## Asset Generation
+Run the following to generate the actual assets:
+```dart
+dart run ./tool/generator.dart
+```
+
 ## Usage
 
 ```dart

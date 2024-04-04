@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:io';
 
 import 'package:code_builder/code_builder.dart';
@@ -7,6 +6,8 @@ import 'package:path/path.dart' as p;
 import 'package:recase/recase.dart';
 
 Future<void> main() async {
+  await removeCacheAndCloneRepo();
+
   final files = await _getIconFiles();
   final file = File(p.join('lib', 'src', 'icons.dart'));
   print('[main] Generating icon classes');
@@ -65,9 +66,32 @@ Future<void> main() async {
   );
 }
 
+Future<void> removeCacheAndCloneRepo() async {
+  try {
+    final dir = Directory("./.cache");
+    print(dir);
+    if (dir.existsSync()) {
+      await dir.delete(recursive: true);
+    }
+  } catch (e) {
+    print(e);
+  }
+
+  final res = await Process.run("git",
+      ["clone", "https://github.com/feathericons/feather.git", ".cache"]);
+  print(res.stderr);
+  print(res.stdout);
+  if (res.exitCode == 0) {
+    return null;
+  } else {
+    throw "cloning git repo failed";
+  }
+}
+
 Future<List<IconFile>> _getIconFiles() async {
   final files = await Directory(
-    p.join(Directory.current.path, '.cache/icons'),
+    p.join(Directory.current.path,
+        Platform.isWindows ? r'.cache\icons' : '.cache/icons'),
   ).list().toList();
   final _f = <IconFile>[];
   for (final file in files) {
