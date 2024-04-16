@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:io';
 
 import 'package:code_builder/code_builder.dart';
