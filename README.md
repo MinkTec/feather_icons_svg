@@ -5,7 +5,7 @@ pictures. This makes it possible to customize icon properties in runtime (stroke
 
 ## Asset Generation
 Run the following to generate the actual assets:
-```dart
+```sh
 dart run ./tool/generator.dart
 ```
 
